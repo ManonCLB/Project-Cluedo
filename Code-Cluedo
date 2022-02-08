@@ -1,0 +1,693 @@
+import random
+
+class Cards : 
+
+  def __init__(self):
+    self.WeaponCard = []
+    self.WeaponCard.append ("extincteur") #0
+    self.WeaponCard.append ("chargeur d'ordinateur") #1
+    self.WeaponCard.append ("livre de finance") #2
+    self.WeaponCard.append ("trophée") #3
+    self.WeaponCard.append ("bière empoisonnée") #4
+
+    self.SuspectCard = []
+    self.SuspectCard.append ("Héloïse") #0
+    self.SuspectCard.append ("Gaelle") #1
+    self.SuspectCard.append ("Manon") #2
+    self.SuspectCard.append ("Rym") #3
+    self.SuspectCard.append ("Jing") #4
+
+    self.RoomCard = []
+    self.RoomCard.append("bibliothèque") #0
+    self.RoomCard.append("cafétéria") #1
+    self.RoomCard.append("couloir des assos") #2
+    self.RoomCard.append("bureau de Delphine Anne") #3
+    self.RoomCard.append("Vital Roux") #4
+
+    self.allCards =[]
+    self.allCards.append ("extincteur") #0
+    self.allCards.append ("chargeur d'ordinateur") #1
+    self.allCards.append ("livre de finance") #2
+    self.allCards.append ("trophée") #3
+    self.allCards.append ("bière empoisonnée") #4
+    self.allCards.append ("Héloïse") #5
+    self.allCards.append ("Gaelle") #6
+    self.allCards.append ("Manon") #7
+    self.allCards.append ("Rym") #8
+    self.allCards.append ("Jing") #9
+    self.allCards.append("bibliothèque") #10
+    self.allCards.append("cafétéria") #11
+    self.allCards.append("couloir des assos") #12
+    self.allCards.append("bureau de Delphine Anne") #13
+    self.allCards.append("Vital Roux") #14
+
+
+class Game :
+
+   def __init__(self) :
+       self.MysteryCards = []
+       self.gameCards = Cards()
+       self.theRooms = Room()
+       self.youHaveWon = 0
+       self.position1 = self.theRooms.cafet
+       self.position2 = self.theRooms.cafet
+       self.position3 = self.theRooms.cafet
+
+
+   def distributeMystery(self):
+       random.shuffle(self.gameCards.WeaponCard)
+       MysteryWeapon = self.gameCards.WeaponCard[0]
+       self.MysteryCards.append(MysteryWeapon)
+       if MysteryWeapon == "extincteur" :
+         del self.gameCards.allCards[0]
+       elif MysteryWeapon == "chargeur d'ordinateur" :
+         del self.gameCards.allCards[1]
+       elif MysteryWeapon == "livre de finance" :
+         del self.gameCards.allCards[2]
+       elif MysteryWeapon == "trophée" :
+         del self.gameCards.allCards[3]
+       else :
+         del self.gameCards.allCards[4]
+
+       random.shuffle(self.gameCards.SuspectCard)
+       MysterySuspect = self.gameCards.SuspectCard[0]
+       self.MysteryCards.append(MysterySuspect)
+       if MysterySuspect == "Héloïse" :
+         del self.gameCards.allCards[4]
+       elif MysterySuspect == "Gaelle" :
+         del self.gameCards.allCards[5]
+       elif MysterySuspect == "Manon" :
+         del self.gameCards.allCards[6]
+       elif MysterySuspect == "Rym" :
+         del self.gameCards.allCards[7]
+       else :
+         del self.gameCards.allCards[8]
+
+       random.shuffle(self.gameCards.RoomCard)
+       MysteryRoom = self.gameCards.RoomCard[0]
+       self.MysteryCards.append(MysteryRoom)
+       if MysteryRoom == "bibliothèque" :
+         del self.gameCards.allCards[8]
+       elif MysteryRoom == "cafétéria" :
+         del self.gameCards.allCards[9]
+       elif MysteryRoom == "couloir des assos" :
+         del self.gameCards.allCards[10]
+       elif MysteryRoom == "bureau de Delphine Anne" :
+         del self.gameCards.allCards[11]
+       else :
+         del self.gameCards.allCards[12]
+       
+       #print("Les cartes secrètes sont les suivantes :")
+       #print(self.MysteryCards)
+
+       #print(" ") 
+       #print("Le reste des cartes en jeu :")
+       #print(self.gameCards.allCards)
+
+
+   def distributeCards(self):
+     #print("Les cartes mélangées prennent cet ordre :")
+     #print(self.playerCards.allCards)
+     print()
+     
+     random.shuffle(self.gameCards.allCards)
+
+     self.myCards1 = []
+     self.myCards1.append (self.gameCards.allCards[0])
+     self.myCards1.append (self.gameCards.allCards[1])
+     self.myCards1.append (self.gameCards.allCards[2])
+     self.myCards1.append (self.gameCards.allCards[3])
+
+     self.myCards2 = []
+     self.myCards2.append (self.gameCards.allCards[4])
+     self.myCards2.append (self.gameCards.allCards[5])
+     self.myCards2.append (self.gameCards.allCards[6])
+     self.myCards2.append (self.gameCards.allCards[7])
+
+     self.myCards3 = []
+     self.myCards3.append (self.gameCards.allCards[8])
+     self.myCards3.append (self.gameCards.allCards[9])
+     self.myCards3.append (self.gameCards.allCards[10])
+     self.myCards3.append (self.gameCards.allCards[11])
+
+
+   def setFirstRoom(self) :
+     print("Tous les joueurs sont dans la cafétéria au départ du jeu.")
+     #print(self.position1)
+     #print(self.position2)
+     #print(self.position3)
+   
+
+   def execute(self,position):
+     self.goalRoom = None
+     
+     self.question = input("Quel joueur es-tu ? Ecris 1, 2 ou 3.")
+     g = 0
+     while g ==0 :
+       if self.question == "1":
+          self.position = self.position1
+          g = 1
+       elif self.question == "2":
+          self.position = self.position2
+          g=1
+       elif self.question == "3" :
+          self.position = self.position3
+          g=1
+       else :
+          print("Je n'ai pas compris, écris 1, 2 ou 3.")
+          self.question = input("Quel joueur es-tu ? Ecris 1, 2 ou 3.")
+
+     if self.position == self.theRooms.cafet :
+      self.newPosition = input("Dans quelle pièce souhaites-tu aller ? Tu peux aller à : bibliothèque ou Vital Roux ou rester : ")
+      if self.newPosition == "bibliothèque" :                            
+        self.goalRoom = self.theRooms.biblio
+        print()
+        print("Un des endroits les moins fréquentés de l'ESCP... L'endroit parfait pour un meurtre ?")                              
+      elif self.newPosition == "Vital Roux" :
+        self.goalRoom = self.theRooms.amphi
+        print()
+        print("L'endroit idéal pour une sieste... Ou pour un sommeil éternel ?")  
+      elif self.newPosition == "rester" :
+        self.goalRoom = self.theRooms.cafet
+        print()
+        print("La vengeance est un plat qui se mange froid... A la cafétéria ?")  
+      else :
+        print(" ")
+        print("Je n'ai pas compris, as-tu bien orthographié le nom de la salle ?")
+        print("Choisis une salle voisine à ta position actuelle : bibliothèque ou Vital Roux ou rester : ")
+        print("Ecris seulement le nom de la salle ou rester.")
+        print()
+        self.newPosition = input("Dans quelle pièce souhaites-tu aller ? ")
+        if self.newPosition == "bibliothèque" :             
+          self.goalRoom = self.theRooms.biblio 
+          print()
+          print("Un des endroits les moins fréquentés de l'ESCP... L'endroit parfait pour un meurtre ?")                             
+        elif self.newPosition == "Vital Roux" :
+          self.goalRoom = self.theRooms.amphi
+          print()
+          print("L'endroit idéal pour une sieste... Ou pour un sommeil éternel ?")  
+        elif self.newPosition == "rester" :
+          self.goalRoom = self.theRooms.cafet
+          print()
+          print("La vengeance est un plat qui se mange froid... A la cafétéria ?")  
+        else :
+          print()
+          print("Je n'ai pas compris... Tu sembles perdu, tu restes dans la cafétéria.")
+          print("La vengeance est un plat qui se mange froid... A la cafétéria ?")  
+          self.goalRoom = self.theRooms.cafet
+
+
+     if self.position == self.theRooms.biblio :
+      self.newPosition = input("Dans quelle pièce souhaites-tu aller ? Tu peux aller à : cafétéria ou couloir des assos ou rester : ")
+      if self.newPosition == "cafétéria" :           
+        self.goalRoom = self.theRooms.cafet  
+        print()
+        print("La vengeance est un plat qui se mange froid... A la cafétéria ?")                              
+      elif self.newPosition == "couloir des assos" :
+        self.goalRoom = self.theRooms.couloir
+        print()
+        print("Un couloir sombre et désert... Le lieu idéal pour une scène de crime ?")
+      elif self.newPosition == "rester" :
+        self.goalRoom = self.theRooms.biblio
+        print()
+        print("Un des endroits les moins fréquentés de l'ESCP... L'endroit parfait pour un meurtre ?") 
+      else :
+        print(" ")
+        print("Je n'ai pas compris, as-tu bien orthographié le nom de la salle ?")
+        print("Choisis une salle voisine à ta position actuelle : bibliothèque ou Vital Roux ou rester : ")
+        print("Ecris seulement le nom de la salle ou rester.")
+        print()
+        self.newPosition = input("Dans quelle pièce souhaites-tu aller ? ")
+        if self.newPosition == "cafétéria" :             
+          self.goalRoom = self.theRooms.cafet  
+          print()
+          print("La vengeance est un plat qui se mange froid... A la cafétéria ?")                              
+        elif self.newPosition == "couloir des assos" :
+          self.goalRoom = self.theRooms.couloir
+          print()
+          print("Un couloir sombre et désert... Le lieu idéal pour une scène de crime ?")
+        elif self.newPosition == "rester" :
+          self.goalRoom = self.theRooms.biblio
+          print()
+          print("Un des endroits les moins fréquentés de l'ESCP... L'endroit parfait pour un meurtre ?") 
+        else :
+          print()
+          print("Je n'ai pas compris... Vous semblez perdu, vous restez dans la bibliothèque.")
+          print("Un des endroits les moins fréquentés de l'ESCP... L'endroit parfait pour un meurtre ?") 
+          self.goalRoom = self.theRooms.biblio
+          print()
+          print("Un des endroits les moins fréquentés de l'ESCP... L'endroit parfait pour un meurtre ?") 
+
+     if self.position == self.theRooms.amphi :
+      self.newPosition = input("Dans quelle pièce souhaitez-vous aller ? Vous pouvez aller à : cafétéria ou bureau de Delphine Anne ou rester : ")
+      if self.newPosition == "cafétéria" :             
+        self.goalRoom = self.theRooms.cafet   
+        print()
+        print("La vengeance est un plat qui se mange froid... A la cafétéria ?")               
+      elif self.newPosition == "bureau de Delphine Anne" :
+        self.goalRoom = self.theRooms.bureau
+        print()
+        print("Attention, j'espère que tu as justifié toutes tes absences...")
+        print("Selon nos informations, Jeanne-Baptiste avait elle aussi des comptes à rendre à la scolarité.")
+      elif self.newPosition == "rester" :
+        self.goalRoom = self.theRooms.amphi
+        print()
+        print("L'endroit idéal pour une sieste... Ou pour un sommeil éternel ?")  
+      else :
+        print(" ")
+        print("Je n'ai pas compris, avez-vous bien orthographié le nom de la salle ?")
+        print("Veuillez choisir une salle voisine à votre position actuelle : bibliothèque ou Vital Roux ou rester : ")
+        print("Ecrivez seulement le nom de la salle ou rester.")
+        print()
+        self.newPosition = input("Dans quelle pièce souhaitez-vous aller ? ")
+        if self.newPosition == "cafétéria" :             
+          self.goalRoom = self.theRooms.cafet  
+          print()
+          print("La vengeance est un plat qui se mange froid... A la cafétéria ?")                             
+        elif self.newPosition == "bureau de Delphine Anne" :
+          self.goalRoom = self.theRooms.bureau
+          print()
+          print("Attention, j'espère que tu as justifié toutes tes absences...")
+          print("Selon nos informations, Jeanne-Baptiste avait elle aussi des comptes à rendre à la scolarité.")
+        elif self.newPosition == "rester" :
+          self.goalRoom = self.theRooms.amphi
+          print()
+          print("L'endroit idéal pour une sieste... Ou pour un sommeil éternel ?")  
+        else :
+          print()
+          print("Je n'ai pas compris... Tu sembles perdu, tu restes en Vital Roux.")
+          print("L'endroit idéal pour une sieste... Ou pour un sommeil éternel ?")  
+          self.goalRoom = self.theRooms.amphi
+
+     if self.position == self.theRooms.bureau :
+      self.newPosition = input("Dans quelle pièce souhaitez-vous aller ? Vous pouvez aller à : couloir des assos ou Vital Roux ou rester : ")
+      if self.newPosition == "couloir des assos" :
+        self.goalRoom = self.theRooms.couloir  
+        print()
+        print("Un couloir sombre et désert... Le lieu idéal pour une scène de crime ?")                           
+      elif self.newPosition == "Vital Roux" :
+        self.goalRoom = self.theRooms.amphi
+        print()
+        print("L'endroit idéal pour une sieste... Ou pour un sommeil éternel ?")  
+      elif self.newPosition == "rester" :
+        self.goalRoom = self.theRooms.bureau
+        print()
+        print("Attention, j'espère que tu as justifié toutes tes absences...")
+        print("Selon nos informations, Jeanne-Baptiste avait elle aussi des comptes à rendre à la scolarité.")
+      else :
+        print(" ")
+        print("Je n'ai pas compris, avez-vous bien orthographié le nom de la salle ?")
+        print("Veuillez choisir une salle voisine à votre position actuelle : bibliothèque ou Vital Roux ou rester : ")
+        print("Ecrivez seulement le nom de la salle ou rester.")
+        self.newPosition = input("Dans quelle pièce souhaitez-vous aller ?")
+        if self.newPosition == "couloir des assos" :
+          self.goalRoom = self.theRooms.couloir     
+          print()
+          print("Un couloir sombre et désert... Le lieu idéal pour une scène de crime ?")                           
+        elif self.newPosition == "Vital Roux" :
+          self.goalRoom = self.theRooms.amphi
+          print()
+          print("L'endroit idéal pour une sieste... Ou pour un sommeil éternel ?")  
+        elif self.newPosition == "rester" :
+          self.goalRoom = self.theRooms.bureau
+          print()
+          print("Attention, j'espère que tu as justifié toutes tes absences...")
+          print("Selon nos informations, Jeanne-Baptiste avait elle aussi des comptes à rendre à la scolarité.")
+        else :
+          print()
+          print("Je n'ai pas compris... Vous semblez perdu, vous restez dans le bureau de Delphine Anne.")
+          self.goalRoom = self.theRooms.bureau
+          print()
+          print("Attention, j'espère que tu as justifié toutes tes absences...")
+          print("Selon nos informations, Jeanne-Baptiste avait elle aussi des comptes à rendre à la scolarité.")
+
+     if self.position == self.theRooms.couloir :
+      self.newPosition = input("Dans quelle pièce souhaites-tu aller ? Tu peux aller à : bibliothèque ou bureau de Delphine Anne ou rester : ")
+      if self.newPosition == "bibliothèque" :          
+        self.goalRoom = self.theRooms.biblio   
+        print()
+        print("Un des endroits les moins fréquentés de l'ESCP... L'endroit parfait pour un meurtre ?")            
+      elif self.newPosition == "bureau de Delphine Anne" :
+        print()
+        print("Attention, j'espère que tu as justifié toutes tes absences...")
+        print("Selon nos informations, Jeanne-Baptiste avait elle aussi des comptes à rendre à la scolarité.")
+        self.goalRoom = self.theRooms.bureau
+      else :
+        print(" ")
+        print("Je n'ai pas compris, as-tu bien orthographié le nom de la salle ?")
+        print("Choisis une salle voisine à ta position actuelle : bibliothèque ou Vital Roux ou rester : ")
+        print("Ecris seulement le nom de la salle ou rester")
+        print()
+        self.newPosition = input("Dans quelle pièce souhaites-tu aller ?")
+        if self.newPosition == "bibliothèque" :             
+          self.goalRoom = self.theRooms.biblio     
+          print()
+          print("Un des endroits les moins fréquentés de l'ESCP... L'endroit parfait pour un meurtre ?") 
+        elif self.newPosition == "bureau de Delphine Anne" :
+          self.goalRoom = self.theRooms.bureau
+          print()
+          print("Attention, j'espère que tu as justifié toutes tes absences...")
+          print("Selon nos informations, Jeanne-Baptiste avait elle aussi des comptes à rendre à la scolarité.")
+        elif self.newPosition == "rester" :
+          self.goalRoom = self.theRooms.couloir
+          print()
+          print("Un couloir sombre et désert... Le lieu idéal pour une scène de crime ?")    
+        else :
+          print()
+          print("Je n'ai pas compris... Tu sembles perdu, tu restes dans le couloir des assos : ")
+          print("Un couloir sombre et désert... Le lieu idéal pour une scène de crime ?")    
+          self.goalRoom = self.theRooms.couloir
+
+     self.position = self.goalRoom
+
+     if self. question == "1":
+       self.position1 = self.position
+     elif self.question == "2":
+       self.position2 = self.position
+     elif self.question == "3" :
+       self.position3 = self.position
+
+
+   def play(self):
+     self.distributeMystery()
+     #print(self.MysteryCards)
+     self.distributeCards()
+     #print(self.gameCards.allCards)
+
+     while self.youHaveWon < 1 :
+
+       #Joueur1
+          print()
+          print("******Joueur 1 à toi de jouer!******")
+          print()
+          print("Voici tes cartes:")
+          print(self.myCards1)
+          self.execute(self.position1)
+          print("Salle actuelle : ", self.position1)
+          print()
+          print("**C'est l'heure des suggestions**")
+          print()
+          v=0
+          while v==0 :
+            print("Les différents suspects sont: Héloïse, Jing, Gaelle, Manon, Rym")
+            Suspect= input("Selon toi, qui est le coupable ? ")
+            if Suspect=="Héloïse":
+              v=v+1
+            elif Suspect=="Gaelle":
+              v=v+1
+            elif Suspect=="Manon":
+              v=v+1
+            elif Suspect=="Jing":
+              v=v+1
+            elif Suspect=="Rym":
+              v=v+1
+            else:
+              print()
+              print("Je n'ai pas compris, veille à vérifier l'orthographe.")
+              print()
+
+          w=0
+          while w==0 :
+            print()
+            print("Les différentes armes sont: bière empoisonnée, extincteur, chargeur d'ordinateur, trophée, livre de finance")
+            SugWeapon= input("Selon toi, quelle est l'arme du crime ? ")
+            if SugWeapon=="bière empoisonnée":
+              w=w+1
+            elif SugWeapon=="extincteur":
+              w=w+1
+            elif SugWeapon=="chargeur d'ordinateur":
+              w=w+1
+            elif SugWeapon=="trophée":
+              w=w+1
+            elif SugWeapon=="livre de finance":
+              w=w+1
+            else :
+              print()
+              print("Je n'ai pas compris, veille à vérifier l'orthographe")
+              print()
+
+          sugList=[]
+          sugList.append(SugWeapon)
+          sugList.append(Suspect)
+          sugList.append(self.position1)
+
+          listePropFausses=[]
+          i=0
+          j=0
+          while i<3: 
+              if sugList[i]==self.MysteryCards[i]:
+                j=j+1
+              else:
+                listePropFausses.append(sugList[i])
+              i=i+1
+
+          random.shuffle(listePropFausses)      
+          if j == 3 :
+              print()
+              print("Tu as trouvé toutes les cartes. Félicitations, tu as gagné, la mémoire de Jeanne-Baptiste Say est vengée !")
+              print("Pour te récompenser, l'ESCP annule tous tes rattrapages !")
+              self.youHaveWon = 1
+              break
+          else : 
+              if j == 1 :
+                print()
+                print("Tu as trouvé une carte sur trois, tu es sur la bonne voie !")
+                print()
+              elif j == 2 :
+                print()
+                print("Tu as trouvé deux cartes sur trois, bon boulot, il n'en reste plus qu'une !")
+                print()
+              elif j == 0 :
+                print()
+                print("Malheureusement, aucune de tes propositions n'est bonne... Continue d'enquêter !")
+                print()
+              if self.position1 in listePropFausses :
+                print("Le meurtre n'a pas été commis dans la salle dans laquelle tu te trouves actuellement.")
+                print()
+              else :
+                print()
+                print("Cette proposisition est fausse : ")
+                print(listePropFausses[0])
+                print()
+              print("Passe l'ordinateur au joueur 2 après avoir lu les informations") 
+              oui = input("As-tu bien lu les informations ?")
+              u=0
+              while u<60 : 
+                print()
+                u=u+1              
+
+
+        #Joueur2
+          print("******Joueur 2 à toi de jouer!******")
+          print()
+          print("Voici tes cartes : ")
+          print(self.myCards2)
+          self.execute(self.position2)
+          print("Salle actuelle : ", self.position2)
+          print()
+          print("**C'est l'heure des suggestions.**")
+          v=0
+          while v==0 :
+            print()
+            print("Les différents suspects sont: Héloïse, Jing, Gaelle, Manon, Rym")
+            Suspect= input("Selon toi, qui est le coupable ? ")
+            if Suspect=="Héloïse":
+              v=v+1
+            elif Suspect=="Gaelle":
+              v=v+1
+            elif Suspect=="Manon":
+              v=v+1
+            elif Suspect=="Jing":
+              v=v+1
+            elif Suspect=="Rym":
+              v=v+1
+            else:
+              print()
+              print("Je n'ai pas compris, veille à vérifier l'orthographe")
+              print()
+ 
+          w=0
+          while w==0 :
+            print()
+            print("Les différentes armes sont: bière empoisonnée, extincteur, chargeur d'ordinateur, trophée, livre de finance")
+            SugWeapon= input("Selon toi, quelle est l'arme du crime ? ")
+            if SugWeapon=="bière empoisonnée":
+              w=w+1
+            elif SugWeapon=="extincteur":
+              w=w+1
+            elif SugWeapon=="chargeur d'ordinateur":
+              w=w+1
+            elif SugWeapon=="trophée":
+              w=w+1
+            elif SugWeapon=="livre de finance":
+              w=w+1
+            else :
+              print()
+              print("Je n'ai pas compris, veille à vérifier l'orthographe")
+              print()
+
+
+          sugList=[]
+          sugList.append(SugWeapon)
+          sugList.append(Suspect)
+          sugList.append(self.position2)
+
+          listePropFausses=[]
+          i=0
+          j=0
+          while i<3: 
+              if sugList[i]==self.MysteryCards[i]:
+                j=j+1
+              else:
+                listePropFausses.append(sugList[i])
+              i=i+1
+
+          random.shuffle(listePropFausses)      
+          if j == 3 :
+              print()
+              print("Tu as trouvé toutes les cartes. Félicitations, tu as gagné, la mémoire de Jeanne-Baptiste Say est vengée !")
+              print("Pour te récompenser, l'ESCP annule tous tes rattrapages !")
+              self.youHaveWon = 1
+              break
+          else : 
+              if j == 1 :
+                print()
+                print("Tu as trouvé une carte sur trois, tu es sur la bonne voie !")
+                print()
+              elif j == 2 :
+                print()
+                print("Tu as trouvé deux cartes sur trois, bon boulot, il n'en reste plus qu'une !")
+                print()
+              elif j == 0 :
+                print()
+                print("Malheureusement, aucune de tes propositions n'est bonne... Continue d'enquêter !")
+                print()
+              if self.position2 in listePropFausses  :
+                print("Le meurtre n'a pas été commis dans la salle dans laquelle tu te trouves actuellement.")
+                print()
+              else :
+                print()
+                print("Cette proposisition est fausse : ")
+                print(listePropFausses[0])
+                print()
+              print("Passe l'ordinateur au joueur 3 après avoir lu les informations")  
+              oui = input("As-tu bien lu les informations ? ")
+              u=0
+              while u<60 : 
+                print(" ")
+                u=u+1     
+
+      #Joueur3
+          print("******Joueur 3 à toi de jouer!******")
+          print()
+          print("Voici tes cartes:")
+          print(self.myCards3)
+          self.execute(self.position3)
+          print("Salle actuelle : ", self.position3)  
+          print()
+          print("**C'est l'heure des suggestions.**")
+          print()
+          v=0
+          while v==0 :
+            print("Les différents suspects sont: Héloïse, Jing, Gaelle, Manon, Rym")
+            Suspect= input("Selon toi, qui est le coupable ? ")
+            if Suspect=="Héloïse":
+              v=v+1
+            elif Suspect=="Gaelle":
+              v=v+1
+            elif Suspect=="Manon":
+              v=v+1
+            elif Suspect=="Jing":
+              v=v+1
+            elif Suspect=="Rym":
+              v=v+1
+            else:
+              print()
+              print("Je n'ai pas compris, veille à vérifier l'orthographe")
+              print()
+
+          w=0
+          while w==0 :
+            print()
+            print("Les différentes armes sont: bière empoisonnée, extincteur, chargeur d'ordinateur, trophée, livre de finance")
+            SugWeapon= input("Selon vous, quelle est l'arme du crime ? ")
+            if SugWeapon=="bière empoisonnée":
+              w=w+1
+            elif SugWeapon=="extincteur":
+              w=w+1
+            elif SugWeapon=="chargeur d'ordinateur":
+              w=w+1
+            elif SugWeapon=="trophée":
+              w=w+1
+            elif SugWeapon=="livre de finance":
+              w=w+1
+            else :
+              print()
+              print("Je n'ai pas compris, veuillez vérifier l'orthographe")
+              print()
+
+          sugList=[]
+          sugList.append(SugWeapon)
+          sugList.append(Suspect)
+          sugList.append(self.position3)
+
+          listePropFausses=[]
+          i=0
+          j=0
+          while i<3: 
+              if sugList[i]==self.MysteryCards[i]:
+                j=j+1
+              else:
+                listePropFausses.append(sugList[i])
+              i=i+1
+
+          random.shuffle(listePropFausses)      
+          if j == 3 :
+              print()
+              print("Tu as trouvé toutes les cartes. Félicitations, tu as gagné, la mémoire de Jeanne-Baptiste Say est vengée !")
+              print("Pour te récompenser, l'ESCP annule tous tes rattrapages !")
+              self.youHaveWon = 1
+              break
+          else : 
+              if j == 1 :
+                print()
+                print("Tu as trouvé une carte sur trois, tu es sur la bonne voie !")
+                print()
+              elif j == 2 :
+                print()
+                print("Tu as trouvé deux cartes sur trois, bon boulot, il n'en reste plus qu'une !")
+                print()
+              elif j == 0 :
+                print()
+                print("Malheureusement, aucune de tes propositions n'est bonne... Continue d'enquêter !")
+                print()
+              if self.position3 in listePropFausses :
+                print("Le meurtre n'a pas été commis dans la salle dans laquelle tu te trouves actuellement.")
+                print()
+              else :
+                print()
+                print("Cette proposisition est fausse : ")
+                print(listePropFausses[0])
+                print()
+              print("Passe l'ordinateur au joueur 1 après avoir lu les informations.")  
+              oui = input("As-tu bien lu les informations ? ") 
+              u=0
+              while u<60 : 
+                print()
+                u=u+1
+
+
+class Room :
+   
+   def __init__(self) :
+     self.cafet = "cafétéria"
+     self.biblio = "bibliothèque"
+     self.couloir = "couloir des associations"
+     self.bureau = "bureau de Delphine Anne"
+     self.amphi = "Vital Roux"
+ 
+
+
+theGame = Game()
+theGame.setFirstRoom()
+theGame.play()
